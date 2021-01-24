@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - python3 -m pip install --target ./dist-lambda -r requirements-lambda.txt
+  build:
+    commands:
+      - cp -a lambda/. dist-lambda/
+      - ls dist-lambda
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist-lambda

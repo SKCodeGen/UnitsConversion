@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - node --version
+      - npm install -g aws-cdk
+      - cdk --version
+      - npm update
+      - python -m venv venv
+      - . venv/bin/activate
+      - python -m pip install -r requirements-cdk.txt
+  build:
+    commands:
+      - cdk synth LambdaStack -o dist
+artifacts:
+  files:
+    - LambdaStack.template.json
+  base-directory: dist

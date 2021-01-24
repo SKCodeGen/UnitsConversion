@@ -1,0 +1,8 @@
+**/__pycache__/
+.idea/
+.DS_Store
+.venv/
+*.egg-info/
+**/*.egg-info/
+.env/
+cdk.out/
