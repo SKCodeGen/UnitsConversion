@@ -3,15 +3,15 @@
 
 ## About
 Application is to Validate Unit Conversions and return correct/incorrect/invalid response in json format based on the input params. Input is passed as Querystring parameters.
-- [Note: supports units Fahrenheit, Celsius and Kelvin]
-Both Application and Application Infrastructure code is written in Python.
+[Note: supports units Fahrenheit, Celsius and Kelvin]
+- Both Application and Application Infrastructure code is written in Python.
 
 ## Prerequisites
-- Install
- 'Python' (Python 3.6 or later including pip and virtualenv)
- 'awscli',
- 'nodejs'(Node.js 10.3.0 or later (Note: not 13.0.0 through 13.6.0)),
- 'aws-cdk'
+Install
+ - Python (Python 3.6 or later including pip and virtualenv)
+ - AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+ - Nodejs (Node.js 10.3.0 or later (Note: not 13.0.0 through 13.6.0)),
+ - aws-cdk
  ```
  npm install -g aws-cdk
 
