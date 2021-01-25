@@ -37,7 +37,7 @@ git remote set-url origin https://{git-user}:{git-password}git-codecommit.us-eas
 ```
 git push
 ```
-- Deploy 'PipelineDeployingLambdaStack' to deploy infrastructure for 'pipeline' to build 'lambda code' and 'lambda/apigateway infrastructure code'. Replace {profile-name} with your programmatic user profile or '--profile' tag when using default profile
+- Deploy 'PipelineDeployingLambdaStack' to deploy infrastructure for 'pipeline' to build 'lambda code' and 'lambda/apigateway infrastructure code'. This also triggers 'pytest' to run unit tests. Replace {profile-name} with your programmatic user profile or '--profile' tag when using default profile
 ```
 cdk deploy PipelineDeployingLambdaStack --profile {profile-name}
 ```
@@ -62,7 +62,11 @@ pip install -r requirements-cdk.txt
 ```
 git add .
 git commit -m "modifications"
-git push
+git push (This also triggers 'pytest' to run unit tests.)
+```
+- Execute below to run unit tests in local
+```
+pytest
 ```
 - In case of recreating the all the infrastructure, execute below commands. Replace {profile-name} with your programmatic user profile or '--profile' tag when using default profile
 ```
@@ -73,7 +77,7 @@ cdk deploy PipelineDeployingLambdaStack --profile {profile-name}
 ```
 cdk diff PipelineDeployingLambdaStack --profile {profile-name}
 ```
-Execute below if just to synthesize the cloud formation template
+- Execute below if just to synthesize the cloud formation template
 ```
 cdk synth PipelineDeployingLambdaStack --profile {profile-name}
 ```

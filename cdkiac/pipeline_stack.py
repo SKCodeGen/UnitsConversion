@@ -11,22 +11,28 @@ class PipelineStack(core.Stack):
                  lambda_code: lambda_.CfnParametersCode = None, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
+        # Creating repository object now from the repository we have created through console (repo_name)
         code = codecommit.Repository.from_repository_name(self, "UnitConversionCodeCommitRepo",
                                                           repo_name)
 
+        # Creating CodeBuild project for Lambda/Apigateway infrastructure build now
         cdk_build = codebuild.PipelineProject(self, "UnitConversionCdkBuild",
                                               build_spec=codebuild.BuildSpec.from_source_filename('cdkbuildspec.yml'))
 
+        # Creating CodeBuild project for Lambda/Apigateway application build now
         lambda_build = codebuild.PipelineProject(self, 'UnitConversionLambdaBuild',
                                                  build_spec=codebuild.BuildSpec.from_source_filename('lambdabuildspec'
                                                                                                      '.yml'))
 
+        # Creating Artifacts for pipeline
         source_output = codepipeline.Artifact()
         cdk_build_output = codepipeline.Artifact("UnitConversionCdkBuildOutput")
         lambda_build_output = codepipeline.Artifact("UnitConversionLambdaBuildOutput")
 
+        # Reading s3 location from lambda function build artifact to provide in Deploy stage of pipeline
         lambda_location = lambda_build_output.s3_location
 
+        # Creating pipeline now with CodeCommit. CodeBuild's and Deploy stages
         codepipeline.Pipeline(self, "UnitConversionPipeline",
                               stages=[
                                   codepipeline.StageProps(stage_name="Source",

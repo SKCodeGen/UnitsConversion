@@ -13,7 +13,7 @@ class LambdaStack(core.Stack):
 
         self.lambda_code = lambda_.Code.from_cfn_parameters()
 
-        # Lambda function creation
+        # Configuring for Lambda function creation now
         lambda_function_handler = lambda_.Function(self, "UnitsValidationLambda",
                                                    code=self.lambda_code,
                                                    handler="lambda_function.lambda_handler",
@@ -22,13 +22,16 @@ class LambdaStack(core.Stack):
                                                        datetime.datetime.now()),
                                                    )
 
-        # API gateway creates Lambda backed rest api
+        # Configuring api using API gateway for Lambda function now
         api = apigateway.LambdaRestApi(
             self, 'UnitsValidationEndpoint',
             handler=lambda_function_handler,
             proxy=False
         )
+
+        # Attaching resource 'units' to api now
         units = api.root.add_resource("units")
+        # Attaching 'GET' method to 'units' resource now
         units.add_method("GET")
 
 
