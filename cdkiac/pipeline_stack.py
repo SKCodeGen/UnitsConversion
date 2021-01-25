@@ -11,23 +11,23 @@ class PipelineStack(core.Stack):
                  lambda_code: lambda_.CfnParametersCode = None, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        code = codecommit.Repository.from_repository_name(self, "CodeCommitRepo",
+        code = codecommit.Repository.from_repository_name(self, "UnitConversionCodeCommitRepo",
                                                           repo_name)
 
-        cdk_build = codebuild.PipelineProject(self, "CdkBuild",
+        cdk_build = codebuild.PipelineProject(self, "UnitConversionCdkBuild",
                                               build_spec=codebuild.BuildSpec.from_source_filename('cdkbuildspec.yml'))
 
-        lambda_build = codebuild.PipelineProject(self, 'LambdaBuild',
+        lambda_build = codebuild.PipelineProject(self, 'UnitConversionLambdaBuild',
                                                  build_spec=codebuild.BuildSpec.from_source_filename('lambdabuildspec'
                                                                                                      '.yml'))
 
         source_output = codepipeline.Artifact()
-        cdk_build_output = codepipeline.Artifact("CdkBuildOutput")
-        lambda_build_output = codepipeline.Artifact("LambdaBuildOutput")
+        cdk_build_output = codepipeline.Artifact("UnitConversionCdkBuildOutput")
+        lambda_build_output = codepipeline.Artifact("UnitConversionLambdaBuildOutput")
 
         lambda_location = lambda_build_output.s3_location
 
-        codepipeline.Pipeline(self, "Pipeline",
+        codepipeline.Pipeline(self, "UnitConversionPipeline",
                               stages=[
                                   codepipeline.StageProps(stage_name="Source",
                                                           actions=[
@@ -53,7 +53,7 @@ class PipelineStack(core.Stack):
                                                                   action_name="Lambda_CFN_Deploy",
                                                                   template_path=cdk_build_output.at_path(
                                                                       "LambdaStack.template.json"),
-                                                                  stack_name="LambdaDeploymentStack",
+                                                                  stack_name="UnitConversionLambdaDeploymentStack",
                                                                   admin_permissions=True,
                                                                   parameter_overrides=dict(
                                                                       lambda_code.assign(
