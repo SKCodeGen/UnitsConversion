@@ -15,6 +15,7 @@ phases:
   build:
     commands:
       - cdk synth LambdaStack -o dist
+      - pytest
 artifacts:
   files:
     - LambdaStack.template.json

@@ -82,7 +82,7 @@ cdk synth PipelineDeployingLambdaStack --profile {profile-name}
 
 	Application:
 		- query parameters validation
-		- unit tests
+		- improve unit tests coverage
 		- specific error handling
 		- enhance to support other units too, not it supports only Fahrenheit, Celsius and Kelvin
 
