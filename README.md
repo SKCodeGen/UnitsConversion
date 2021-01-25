@@ -43,7 +43,12 @@ cdk deploy PipelineDeployingLambdaStack --profile {profile-name}
 ```
 - Above command would create apigateway url to call the service, use url with 'units' path and proper querystring parameters. Replace '{UUIDByAPIGateway}' below with the UUID created for your apigateway url
 ```
+Example for 'incorrect' response
 https://{UUIDByAPIGateway}.execute-api.us-east-2.amazonaws.com/prod/units?source_unit=Kelvin&source_value=84.2&target_unit=Celsius&target_value=112.70
+Example for 'correct' response
+https://{UUIDByAPIGateway}.execute-api.us-east-2.amazonaws.com/prod/units?source_unit=Kelvin&source_value=84.2&target_unit=Celsius&target_value=-188.95
+Example for 'invalid' response
+https://{UUIDByAPIGateway}.execute-api.us-east-2.amazonaws.com/prod/units?source_unit=Kelvin&source_value=Kelvin&target_unit=Celsius&target_value=-188.95
 ```
 
 ## For doing modifications in local and commit code
