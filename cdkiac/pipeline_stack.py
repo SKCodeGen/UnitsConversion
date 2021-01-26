@@ -24,7 +24,7 @@ class PipelineStack(core.Stack):
                                                  build_spec=codebuild.BuildSpec.from_source_filename('lambdabuildspec'
                                                                                                      '.yml'))
 
-        # Creating Artifacts for pipeline
+        # Providing Artifacts locations for pipeline's source and build output's
         source_output = codepipeline.Artifact()
         cdk_build_output = codepipeline.Artifact("UnitConversionCdkBuildOutput")
         lambda_build_output = codepipeline.Artifact("UnitConversionLambdaBuildOutput")
@@ -32,7 +32,7 @@ class PipelineStack(core.Stack):
         # Reading s3 location from lambda function build artifact to provide in Deploy stage of pipeline
         lambda_location = lambda_build_output.s3_location
 
-        # Creating pipeline now with CodeCommit. CodeBuild's and Deploy stages
+        # Creating pipeline now with stages for CodeCommit, CodeBuild's and Deploy actions
         codepipeline.Pipeline(self, "UnitConversionPipeline",
                               stages=[
                                   codepipeline.StageProps(stage_name="Source",
